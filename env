@@ -1,0 +1,4 @@
+HOST_NAME="localhost"
+PORT=3000
+CONN_STRING = "mongodb+srv://renataub2964:2LuXO3awj0Nqlf42@volenteerdb.durhxms.mongodb.net/VolenteersProject"
+
