@@ -1,57 +1,54 @@
-
-export default function buildPipeline(smallPipe) {
+export default function buildPipeline() {
     const pipeline = [
         {
             '$lookup': {
-                'from': 'statuses',
-                'localField': 'statusCode',
-                'foreignField': '_id',
-                'as': 'status_info'
+                'from': "status",
+                'localField': "statusCode",
+                'foreignField': "_id",
+                'as': "statusInfo"
             }
         }, {
             '$lookup': {
-                'from': 'locations',
+                'from': 'location',
                 'localField': 'locationCode',
                 'foreignField': '_id',
-                'as': 'location_info'
+                'as': 'locationInfo'
             }
         }, {
             '$lookup': {
-                'from': 'priorities',
+                'from': 'priority',
                 'localField': 'priorityCode',
                 'foreignField': '_id',
-                'as': 'priority_info'
+                'as': 'priorityInfo'
             }
         }, {
             '$unwind': {
-                'path': '$status_info'
+                'path': '$statusInfo',
             }
         }, {
             '$unwind': {
-                'path': '$location_info'
+                'path': '$locationInfo',
             }
         }, {
             '$unwind': {
-                'path': '$priority_info'
+                'path': '$priorityInfo'
             }
         }, {
             '$addFields': {
-                'priority': '$priority_info.preferenceName',
-                'status': '$status_info.state'
+                'priority': '$priorityInfo.name',
+                'status': '$statusInfo.type'
             }
         }, {
             '$project': {
-                'locationCode': 0,
-                'location_info': 0,
-                'status_info': 0,
-                'preference_info': 0,
-                'preferenceCode': 0
+                'statusCode': 0,
+                'locationCode':0,
+                'priorityCode': 0 
             }
         }
     ]
-    for (let i of smallPipe) {
-        pipeline.splice(pipeline.length - 1, 0, i);
-    }
+    // for (let i of smallPipe) {
+    //     pipeline.splice(pipeline.length - 1, 0, i);
+    // }
 
     return pipeline;
 }

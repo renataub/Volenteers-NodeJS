@@ -17,6 +17,3 @@ class VolenteerService extends BaseService {
     }
 }
 export default new VolenteerService(repo);
-
-
-
