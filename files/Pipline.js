@@ -4,7 +4,7 @@ export default function buildPipeline(smallPipe) {
         {
             '$lookup': {
                 'from': 'statuses',
-                'localField': 'status',
+                'localField': 'statusCode',
                 'foreignField': '_id',
                 'as': 'status_info'
             }
@@ -17,10 +17,10 @@ export default function buildPipeline(smallPipe) {
             }
         }, {
             '$lookup': {
-                'from': 'preferences',
-                'localField': 'preferenceCode',
+                'from': 'priorities',
+                'localField': 'priorityCode',
                 'foreignField': '_id',
-                'as': 'preference_info'
+                'as': 'priority_info'
             }
         }, {
             '$unwind': {
@@ -28,15 +28,15 @@ export default function buildPipeline(smallPipe) {
             }
         }, {
             '$unwind': {
-                'path': '$preference_info'
-            }
-        }, {
-            '$unwind': {
                 'path': '$location_info'
             }
         }, {
+            '$unwind': {
+                'path': '$priority_info'
+            }
+        }, {
             '$addFields': {
-                'preference': '$preference_info.preferenceName',
+                'priority': '$priority_info.preferenceName',
                 'status': '$status_info.state'
             }
         }, {

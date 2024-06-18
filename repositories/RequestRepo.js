@@ -8,35 +8,60 @@ class RequestRepo {
         this.model = model;
         connect();
     }
-    async getAll(params) {
-        const sPipe = byParams(params);
-        const pipeline = buildPipeline(sPipe);
-        let requests = await this.model.aggregate(pipeline).exec();
-        return requests;
+    async getAll() {
+        let v = await this.model.find({}).exec();
+        console.log(v);
+        return v;
     }
+    // async getAll(params) {
+    //     const sPipe = byParams(params);
+    //     const pipeline = buildPipeline(sPipe);
+    //     let requests = await this.model.aggregate(pipeline).exec();
+    //     return requests;
+    // }
 
     async getById(id) {
         try {
-            const sPipe = byId(id);
-            const pipline = buildPipeline(sPipe);
-            let req = await this.model.aggregate(pipline).exec();
-            if (!req) {
-                let error = new Error('req is not found');
+            let a = byId(id );
+            let request = await this.model.aggregate(a).exec();
+            if (!request) {
+                let error = new Error('request is not found');
                 error.statusCode = 404;
                 throw error;
             }
-
-            return req;
+            return request;
         }
         catch (errors) {
             console.log(errors.message);
-            throw new Error('An error occurred while retrieving the request. Please try again later');
+            throw new Error('Something wrong happened');
         }
     }
+    // async getById(id) {
+    //     try {
+    //         const sPipe = byId(id);
+    //         const pipline = buildPipeline(sPipe);
+    //         let req = await this.model.aggregate(pipline).exec();
+    //         if (!req) {
+    //             let error = new Error('req is not found');
+    //             error.statusCode = 404;
+    //             throw error;
+    //         }
+
+    //         return req;
+    //     }
+    //     catch (errors) {
+    //         console.log(errors.message);
+    //         throw new Error('An error occurred while retrieving the request. Please try again later');
+    //     }
+    // }
 
     async update(id, data) {
         try {
-            let req = await this.model.findByIdAndUpdate(id, data, { new: true });
+            let req = await this.model.findByIdAndUpdate( { _id: 1 }, 
+                { 
+                    statusCode: 2, 
+                    volenteerCode: id 
+                } );
             return req;
         }
         catch (errors) {
@@ -45,5 +70,5 @@ class RequestRepo {
         }
     }
 
-}
+ }
 export default new RequestRepo(Request);

@@ -7,6 +7,6 @@ router.get('/', volenteerController.getAll);
 
 router.get('/:id', volenteerController.getById);
 
-// router.post('/', volenteerController.insert);
+router.post('/', volenteerController.insert);
 
 export default router;
