@@ -1,7 +1,11 @@
 import connect from './db.js';
 import Request from '../models/RequestModel.js';
 import buildPipeline from '../files/Pipline.js';
+<<<<<<< HEAD
+ import { byParams, byId } from '../files/Filters.js';
+=======
 // import { byParams, byId } from '../files/Filters.js';
+>>>>>>> ac625ac90f4f11b2e7a6a68fa41b78a422f0b0aa
 
 class RequestRepo {
     constructor(model) {
@@ -9,8 +13,14 @@ class RequestRepo {
         connect();
     }
 
+<<<<<<< HEAD
+    async getAll(params) {
+        let id = byParams(params);
+        const pipeline = buildPipeline(id);
+=======
     async getAll() {
         const pipeline = buildPipeline();
+>>>>>>> ac625ac90f4f11b2e7a6a68fa41b78a422f0b0aa
         const aggregationResult = await this.model.aggregate(pipeline).exec();
         return aggregationResult;
     }
