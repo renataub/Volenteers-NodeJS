@@ -6,27 +6,23 @@ class VolenteerRepo {
         this.model = model;
         connect();
     }
+    
     async getAll() {
         let v = await this.model.find({}).exec();
         console.log(v);
         return v;
     }
-    // async getById(id) {
-    //     try {
-    //         let a = byId(id );
-    //         let volenteer = await this.model.aggregate(a).exec();
-    //         if (!volenteer) {
-    //             let error = new Error('volenteer is not found');
-    //             error.statusCode = 404;
-    //             throw error;
-    //         }
-    //         return volenteer;
-    //     }
-    //     catch (errors) {
-    //         console.log(errors.message);
-    //         throw new Error('Something wrong happened!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-    //     }
-    // }
+    
+    async getById(id) {
+        try {
+            let vol = await this.model.findById(id);
+            return vol;
+        }
+        catch(errors){
+            console.log(errors.message);
+            throw new Error('An error occurred while retrieving the volunteer. Please try again later.');
+        }
+    }
 
     async insert(data) {
         try {

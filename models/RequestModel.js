@@ -12,7 +12,7 @@ const RequestSchema = new Schema({
     priorityCode: Number,
     volenteerCode: String
 }, { versionKey: false });
-/*, 'helpRequest'*/
+
 const RequestModel = mongoose.model('helpRequests', RequestSchema, 'helpRequest');
 
 export default RequestModel;
